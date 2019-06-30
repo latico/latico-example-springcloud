@@ -1,0 +1,22 @@
+#集群模式时的节点2启动配置
+server:
+  port: 9302
+
+spring:
+  application:
+    name: service-provider-zookeeper
+  cloud:
+    zookeeper:
+      #      连接zookeeper服务器的地址
+      connectString: localhost:2181
+      #      提供服务提供者自身的信息
+      discovery:
+        instanceHost: localhost
+        instancePort: ${server.port}
+
+#http编码配置
+http:
+  encoding:
+    charset: UTF-8
+    force: true
+    enabled: true

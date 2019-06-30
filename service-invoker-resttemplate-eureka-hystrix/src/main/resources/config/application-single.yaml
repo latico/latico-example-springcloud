@@ -1,0 +1,14 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: service-invoker-eureka
+  #安全认证配置
+  security:
+    user:
+      name: admin
+      password: admin
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8000/eureka/

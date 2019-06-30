@@ -1,0 +1,11 @@
+server:
+  port: 8500
+spring:
+  application:
+    name: server-config-springcloud-bus-refresh
+
+config:
+  bus:
+    server:
+      host: localhost
+      port: 8100

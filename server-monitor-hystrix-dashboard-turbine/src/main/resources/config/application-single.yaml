@@ -1,0 +1,14 @@
+server:
+  port: 8400
+spring:
+  application:
+    name: server-monitor-hystrix-dashboard-turbine
+turbine:
+  appConfig: service-invoker-feign-eureka-hystrix-dashboard,service-invoker-resttemplate-eureka-hystrix-dashboard
+  aggregator:
+    clusterConfig: default
+  clusterNameExpression: new String("default")
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8000/eureka/

@@ -1,0 +1,10 @@
+.idea
+*.iml
+out
+logs
+log
+gen
+target
+
+pom.xml.versionsBackup
+_generator

@@ -1,0 +1,23 @@
+#单机模式时
+server:
+  port: 9300
+
+spring:
+  application:
+    name: service-provider-zookeeper
+  cloud:
+    zookeeper:
+#      连接zookeeper服务器的地址,多个用逗号分割
+      connect-string: localhost:2181
+#      提供服务提供者自身的信息
+      discovery:
+        enabled: true
+#        instanceHost: localhost
+#        instancePort: ${server.port}
+
+#http编码配置
+http:
+  encoding:
+    charset: UTF-8
+    force: true
+    enabled: true

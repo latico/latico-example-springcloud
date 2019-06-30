@@ -1,0 +1,21 @@
+server:
+  port: 8103
+spring:
+  application:
+    name: server-config-springcloud
+
+  cloud:
+    config:
+      server:
+        prefix: service-config
+        git:
+#          在如下git项目中
+          uri: http://gitlab.gdlaticosoft.com:7111/public-config/springcloud-config-center.git
+#          项目里面的搜索目录
+          searchPaths: config
+
+#          把配置中心发布到注册中心
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8001/eureka/,http://localhost:8002/eureka/,http://localhost:8003/eureka/

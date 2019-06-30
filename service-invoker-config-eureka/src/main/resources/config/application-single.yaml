@@ -1,0 +1,7 @@
+#单机模式
+server:
+  port: 9200
+
+spring:
+  application:
+    name: service-invoker-eureka-config

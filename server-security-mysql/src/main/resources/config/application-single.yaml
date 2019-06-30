@@ -1,0 +1,25 @@
+#单机模式时
+server:
+  port: 8600
+
+spring:
+  application:
+    name: server-security-mysql
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/alan_oauth?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&autoReconnect=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+
+#http编码配置
+http:
+  encoding:
+    charset: UTF-8
+    force: true
+    enabled: true
+
+
+# 如果开了安全认证的配置，访问时会要求输入用户名和密码认证，用户名为user，密码在程序启动时会输出到控制台上
+security:
+  basic:
+    enabled: true

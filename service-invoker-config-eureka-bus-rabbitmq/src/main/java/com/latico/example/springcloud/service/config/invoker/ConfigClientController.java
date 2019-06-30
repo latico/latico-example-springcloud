@@ -1,0 +1,36 @@
+package com.latico.example.springcloud.service.config.invoker;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+//需要加上这个刷新范围，配置才会被触及更新
+@RefreshScope
+public class ConfigClientController {
+
+    /**
+     * 读取配置文件的getHelloConfigKey配置项，
+     * 浏览器访问:http://localhost:9200/getHelloConfigKey
+     * 1、如果配置中心是git，流程：转向注册中心，注册中心调用配置中心，配置中心调用git服务器中的文件，一路返回来到这里注入配置
+     * 2、如果配置中心是它本地文件：流程：转向注册中心，注册中心调用配置中心，配置中心调用本地文件，一路返回来到这里注入配置
+     */
+    @Value("${getHelloConfigKey}")
+    String getHelloConfigKey;
+
+    @Value("${getHelloConfigKeyYaml}")
+    String getHelloConfigKeyYaml;
+
+    @RequestMapping(value = "getHelloConfigKey")
+    public String getHelloConfigKey() {
+        return getHelloConfigKey;
+    }
+
+    @RequestMapping(value = "getHelloConfigKeyYaml")
+    public String getHelloConfigKeyYaml() {
+        return getHelloConfigKeyYaml;
+    }
+
+}

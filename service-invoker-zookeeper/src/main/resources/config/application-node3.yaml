@@ -1,0 +1,18 @@
+#集群模式时的节点3启动配置
+server:
+  port: 9403
+
+spring:
+  application:
+    name: service-invoker-zookeeper
+  cloud:
+    zookeeper:
+      #      连接zookeeper服务器的地址
+      connectString: localhost:2181
+
+#http编码配置
+http:
+  encoding:
+    charset: UTF-8
+    force: true
+    enabled: true
