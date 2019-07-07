@@ -6,7 +6,7 @@
  * 4、启动消息提供者；
  * </PRE>
  *
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-18 22:58
  * @Version: 1.0
  */

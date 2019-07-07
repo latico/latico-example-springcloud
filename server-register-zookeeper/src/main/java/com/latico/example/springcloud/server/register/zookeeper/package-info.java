@@ -4,7 +4,7 @@
  * 2、可以使用程序内嵌zookeeper服务端使用，可以使用latico-commons组件包里面的；
  * </PRE>
  *
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-15 15:45
  * @Version: 1.0
  */

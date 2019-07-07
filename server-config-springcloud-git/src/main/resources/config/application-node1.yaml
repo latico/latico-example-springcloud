@@ -10,7 +10,7 @@ spring:
         prefix: service-config
         git:
           #          在如下git项目中
-          uri: http://gitlab.gdlaticosoft.com:7111/public-config/springcloud-config-center.git
+          uri: https://github.com/latico/springcloud-config-center.git
           #          项目里面的搜索目录
           searchPaths: config
 

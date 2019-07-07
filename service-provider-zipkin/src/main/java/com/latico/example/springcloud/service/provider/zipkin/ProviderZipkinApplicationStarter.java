@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * <PRE>
  *  程序启动入口类
  * </PRE>
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-18 20:40:19
  * @Version: 1.0
  */
@@ -23,7 +23,7 @@ public class ProviderZipkinApplicationStarter {
      * 服务器启动
      *
      * @param args
-     * @author <B><a href="mailto:landingdong@gdlaticosoft.com"> 蓝鼎栋 </a></B>
+     * @author <B><a href="mailto:latico@qq.com"> latico </a></B>
      */
     public static void main(String[] args) {
         SpringApplication.run(ProviderZipkinApplicationStarter.class, args);

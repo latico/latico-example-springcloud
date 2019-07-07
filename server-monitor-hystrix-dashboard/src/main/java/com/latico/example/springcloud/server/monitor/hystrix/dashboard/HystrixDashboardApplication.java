@@ -12,10 +12,10 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
  * 但要使用Dashboard则必须加，如果不加，Dashboard无法接收到来自Feign内部断路器的监控数据，
  * 会报“Unable to connect to Command Metric Stream”错误
  * </PRE>
- * <B>项	       目：</B>研发中心公共-综合网管
- * <B>技术支持：</B>广东凯通科技股份有限公司 (c)
+ * <B>项	       目：</B>
+ * <B>技术支持：</B>latico (c)
  *
- * @author <B><a href="mailto:landingdong@gdlaticosoft.com"> 蓝鼎栋 </a></B>
+ * @author <B><a href="mailto:latico@qq.com"> latico </a></B>
  * @version <B>V1.0 2017年3月18日</B>
  * @since <B>JDK1.6</B>
  */

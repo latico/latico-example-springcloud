@@ -8,7 +8,7 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  * <PRE>
  *
  * </PRE>
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-18 17:25:17
  * @Version: 1.0
  */
