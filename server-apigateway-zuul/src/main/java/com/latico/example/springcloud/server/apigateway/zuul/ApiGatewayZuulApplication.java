@@ -9,7 +9,7 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
  * <PRE>
  *  程序入口
  * </PRE>
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-13 22:03:56
  * @Version: 1.0
  */

@@ -14,7 +14,7 @@ import org.springframework.cloud.netflix.turbine.EnableTurbine;
  * 但要使用Dashboard则必须加，如果不加，Dashboard无法接收到来自Feign内部断路器的监控数据，
  * 会报“Unable to connect to Command Metric Stream”错误
  * </PRE>
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-18 17:22:55
  * @Version: 1.0
  */

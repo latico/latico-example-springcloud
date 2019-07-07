@@ -9,7 +9,7 @@
  （F）资源服务器确认令牌无误，同意向客户端开放资源。
  * </PRE>
  *
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-10 20:52
  * @Version: 1.0
  */

@@ -3,7 +3,7 @@ server:
   port: 8100
 spring:
   application:
-#    配置文件的前缀，如下就是：service-config-*.properties或者service-config-*.yaml，*号代表调用者指定，浏览器访问：http://localhost:8100/service-config/dev，就是访问http://gitlab.gdlaticosoft.com:7111/public-config/springcloud-config-center.git/config/helloworldConfig/service-config-dev.properties或者http://gitlab.gdlaticosoft.com:7111/public-config/springcloud-config-center.git/config/helloworldConfig/service-config-dev.yaml
+#    配置文件的前缀，如下就是：service-config-*.properties或者service-config-*.yaml，*号代表调用者指定，浏览器访问：http://localhost:8100/service-config/dev，就是访问https://github.com/latico/springcloud-config-center.git/config/helloworldConfig/service-config-dev.properties或者https://github.com/latico/springcloud-config-center.git/config/helloworldConfig/service-config-dev.yaml
     name: server-config-springcloud-git
   #安全认证配置
   security:
@@ -16,9 +16,9 @@ spring:
         prefix: service-config
         git:
 #          在如下git项目中
-          uri: http://gitlab.gdlaticosoft.com:7111/common/latico-example-springcloud.git
+          uri: https://github.com/latico/latico-example-springcloud.git
 #          如果需要认证用户名密码，需要填入
-          username: landingdong
+          username: latico
           password: 123456
 
 #          git地址目录下里面的搜索目录路径

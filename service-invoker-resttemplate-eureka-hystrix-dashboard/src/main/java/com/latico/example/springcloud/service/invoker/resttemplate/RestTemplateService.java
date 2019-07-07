@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
  * <PRE>
  *  spring自带的请求客户端工具
  * </PRE>
- * @Author: LanDingDong
+ * @Author: latico
  * @Date: 2019-03-10 17:15:03
  * @Version: 1.0
  */
