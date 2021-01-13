@@ -11,4 +11,5 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8000/eureka/
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@172.168.10.7:5000/eureka/
+#      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8000/eureka/

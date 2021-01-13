@@ -10,22 +10,35 @@ spring:
       name: admin
       password: admin
   zipkin:
-    base-url: http://localhost:8500
+#    只要zipkin注册到注册中心，这里也可以使用zipkin服务名称的方式
+#    base-url: http://localhost:8500
+    base-url: http://127.0.0.1:8080/
     enabled: true
+    sender:
+      type: web
   #服务跟踪消息收集率，1代表每一条都收集，0.1代表收集百分之10，如果不配置，有个默认的百分比的
-  #  sleuth:
-  #    sampler:
-  #      percentage: 0.3
+  sleuth:
+    sampler:
+      percentage: 1.0
+  cloud:
+    inetutils:
+      timeout-seconds: 10
 eureka:
   instance:
+    #客户端IP，因为假如存在多网卡，要明确使用某个网卡的IP跟服务端进行通信，默认是自动选择一个
+    #    ip-address: 127.0.0.1
     preferIpAddress: true
+    instance-id: ${displayLocalHost}:${spring.application.name}:${server.port}
+
     # 每隔10s发送一次心跳
     lease-renewal-interval-in-seconds: 10
     # 告知服务端30秒还未收到心跳的话，就将该服务移除列表
     lease-expiration-duration-in-seconds: 30
     #    eureka的管理页面中的注册客户端列表的status字段显示的内容，设置显示swagger
-    statusPageUrl: http://${spring.security.user.name}:${spring.security.user.password}@${spring.cloud.client.ip-address:localhost}:${server.port}/swagger-ui.html
-
+    statusPageUrlPath: /swagger-ui.html
   client:
     serviceUrl:
-      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:8000/eureka/
+      #      可以多个，用逗号分割，逗号跟实际内容之间不能有空格
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@172.168.10.7:5000/eureka/
+  ###########################################################
+  ###########################################################

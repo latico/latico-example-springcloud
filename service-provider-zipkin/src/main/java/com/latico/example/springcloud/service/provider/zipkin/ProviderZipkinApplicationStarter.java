@@ -13,9 +13,7 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  * @Date: 2019-03-18 20:40:19
  * @Version: 1.0
  */
-@SpringBootApplication(scanBasePackages = {"com.latico.example.springcloud"})
-//@MapperScan(basePackages = {"com.latico.archetype.springboot.dao.mapper"})
-@ServletComponentScan
+@SpringBootApplication
 @EnableEurekaClient
 public class ProviderZipkinApplicationStarter {
 

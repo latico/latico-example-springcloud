@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
-public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter {
+public class OAuthSecurityConfigImpl extends AuthorizationServerConfigurerAdapter {
  
     @Autowired
     private AuthenticationManager authenticationManager;

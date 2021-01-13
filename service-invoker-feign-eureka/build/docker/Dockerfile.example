@@ -1,0 +1,9 @@
+FROM hub.c.163.com/library/java
+
+MAINTAINER springboot
+
+RUN mkdir -p /home/latico/springboot
+
+ADD ./demo.jar /home/latico/springboot/demo.jar
+
+ENTRYPOINT ["java","-jar","demo.jar"]
