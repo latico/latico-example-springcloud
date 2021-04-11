@@ -52,6 +52,9 @@
         <module>service-handler-data-redis</module>
         <module>server-sleuth-elk</module>
         <module>server-apigateway-ngineureka</module>
+        <module>service-provider-nacos</module>
+        <module>service-invoker-nacos</module>
+        <module>service-invoker-config-nacos</module>
     </modules>
 
     <!-- 版本和变量统一管理 -->
@@ -85,10 +88,14 @@
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <janino.version>3.0.11</janino.version>
-        <springcloud.version>Greenwich.RELEASE</springcloud.version>
-        <springboot.version>2.1.3.RELEASE</springboot.version>
-        <swagger.version>2.6.1</swagger.version>
+        <springcloud.version>Hoxton.SR9</springcloud.version>
+<!--        <springcloud.version>2020.0.0</springcloud.version>-->
+        <springboot.version>2.3.2.RELEASE</springboot.version>
+<!--        <springboot.version>2.4.2</springboot.version>-->
+        <swagger.version>2.8.0</swagger.version>
         <feign.version>10.2.0</feign.version>
+<!--        <springcloud.alibaba.version>2020.0.RC1</springcloud.alibaba.version>-->
+        <springcloud.alibaba.version>2.2.5.RELEASE</springcloud.alibaba.version>
     </properties>
 
     <!-- 打包配置 -->
@@ -142,17 +149,81 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
                     <encoding>${project.encoding}</encoding>
                 </configuration>
             </plugin>
+            <!--因为该模块的pom不是继承springboot的父依赖，所以这个打包插件需要参考springboot的父的打包配置-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--指定启动类-->
+                    <!--<mainClass>${start-class}</mainClass>-->
+                </configuration>
+            </plugin>
 
+            <!--拷贝classpath配置等文件，执行assembly-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <encoding>${project.encoding}</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>replace-win</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <filters>
+                                <filter>build/assembly/program.properties</filter>
+                            </filters>
+                            <descriptors>
+                                <!--<descriptor>${basedir}/../build/assembly/assembly-descriptor-win.xml</descriptor>-->
+                                <descriptor>build/assembly/assembly-descriptor-win.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>replace-unix</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <filters>
+                                <filter>build/assembly/program.properties</filter>
+                            </filters>
+                            <descriptors>
+                                <!--<descriptor>${basedir}/../build/assembly/assembly-descriptor-unix.xml</descriptor>-->
+                                <descriptor>build/assembly/assembly-descriptor-unix.xml</descriptor>
+                            </descriptors>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
 
         <!-- 专用插件统一管理 -->
@@ -163,7 +234,83 @@
         </pluginManagement>
 
     </build>
+    <!-- 专用依赖统一管理 -->
+    <dependencyManagement>
+        <dependencies>
+            <!--注意：根据同一个pom文件，依赖的优先级是根据依赖的顺序决定，因为要以springboot为主，而且依赖的打包插件等都是要以springboot优先，如果以springcloud在前，那么spring-boot-maven-plugin打包插件不会打包成springboot的启动方式-->
+            <!--管理导入springboot的父pom-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${springboot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--springcloud父依赖管理-->
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${springcloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${springcloud.alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>2.0.0</version>
+            </dependency>
 
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <!--阿里巴巴数据源-->
+            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+            <!-- alibaba的druid数据库连接池 -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>1.1.9</version>
+            </dependency>
+            <!--阿里巴巴数据源-->
+            <!-- 分页插件 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.5</version>
+            </dependency>
+
+            <!--模板框架-->
+            <dependency>
+                <groupId>org.freemarker</groupId>
+                <artifactId>freemarker</artifactId>
+                <version>2.3.28</version>
+            </dependency>
+            <!--模板框架-->
+            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>1.9.2</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <!-- 共用依赖 -->
     <dependencies>
 
@@ -246,79 +393,31 @@
             <version>4.0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.latico.commons</groupId>
+            <artifactId>latico-commons-common</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--spring工具类，可以拿到spring里面的对象操作-->
+        <dependency>
+            <groupId>com.latico.commons</groupId>
+            <artifactId>latico-commons-spring</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <!--swagger restful接口自动可视化界面工具-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
 
-
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <!--swagger restful接口自动可视化界面工具-->
     </dependencies>
 
-    <!-- 专用依赖统一管理 -->
-    <dependencyManagement>
-        <dependencies>
-            <!--注意：根据同一个pom文件，依赖的优先级是根据依赖的顺序决定，因为要以springboot为主，而且依赖的打包插件等都是要以springboot优先，如果以springcloud在前，那么spring-boot-maven-plugin打包插件不会打包成springboot的启动方式-->
-            <!--管理导入springboot的父pom-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${springboot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <!--springcloud父依赖管理-->
-            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${springcloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
 
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>2.0.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-
-            <!--阿里巴巴数据源-->
-            <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
-            <!-- alibaba的druid数据库连接池 -->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>1.1.9</version>
-            </dependency>
-            <!--阿里巴巴数据源-->
-            <!-- 分页插件 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>1.2.5</version>
-            </dependency>
-
-            <!--模板框架-->
-            <dependency>
-                <groupId>org.freemarker</groupId>
-                <artifactId>freemarker</artifactId>
-                <version>2.3.28</version>
-            </dependency>
-            <!--模板框架-->
-            <!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
-            <dependency>
-                <groupId>org.aspectj</groupId>
-                <artifactId>aspectjweaver</artifactId>
-                <version>1.9.2</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 </project>

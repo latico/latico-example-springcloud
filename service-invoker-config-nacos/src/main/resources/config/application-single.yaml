@@ -1,0 +1,14 @@
+#单机模式
+server:
+  port: 9001
+  servlet:
+    context-path: /
+spring:
+    #安全认证配置
+  security:
+    user:
+      name: admin
+      password: admin
+  cloud:
+    inetutils:
+      timeout-seconds: 10

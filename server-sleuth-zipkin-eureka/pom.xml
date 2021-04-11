@@ -9,15 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-provider-eureka</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>server-sleuth-zipkin-eureka</artifactId>
 
-    <name>service-provider-eureka</name>
+    <name>server-sleuth-zipkin-eureka</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-    <properties>
-        <!--<start-class>${project.parent.groupId}.service.provider.ApplicationStarter</start-class>-->
-    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -25,14 +22,24 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-netflix-eureka-client</artifactId>
         </dependency>
-
+        <!-- 调用链 ZipKin -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+            <version>2.12.9</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- 调用链 ZipKin -->
     </dependencies>
 
-    <build>
-        <plugins>
-
-        </plugins>
-    </build>
 </project>

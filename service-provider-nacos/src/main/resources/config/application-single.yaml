@@ -1,0 +1,21 @@
+#单机模式
+server:
+  port: 9003
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: service-provider-nacos
+    #安全认证配置
+  security:
+    user:
+      name: admin
+      password: admin
+  cloud:
+    inetutils:
+      timeout-seconds: 10
+    nacos:
+      discovery:
+        password: nacos
+        username: nacos
+        server-addr: 127.0.0.1:8848
